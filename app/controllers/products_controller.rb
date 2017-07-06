@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_is_admin
 
     def index
       @products = Product.all
@@ -42,11 +41,10 @@ class ProductsController < ApplicationController
       redirect_to admin_products_path
     end
 
-    def require_is_admin
-      if !current_user.admin?
-        flash[:alert] = "You are not admin"
-        redirect_to root_path
-      end
+    def add_to_cart
+      @product = Product.find(params[:id])
+      redirect_to :back
+      flash[:notice] = "已加入"
     end
 
     private
